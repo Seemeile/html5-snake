@@ -16,7 +16,11 @@
         </style>
     </head>
     <body>
-        <canvas id="canvas" width="500" height="500"></canvas>
+        <div style="display: flex; flex-direction: column;">
+            <div id="highscore" style="text-align: center; font-size: 48px; color: grey;">0</div>
+            <canvas id="canvas" width="500" height="500"></canvas>
+        </div>
+        <script src="game.ts"></script>
         <script src="level.ts"></script>
         <script src="snake.ts"></script>
         <script src="main.ts"></script>

@@ -1,6 +1,7 @@
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
+const game = new Game();
 const level = new Level();
 const snake = new Snake();
 
@@ -35,12 +36,20 @@ const checkKey = (e) => {
 
 document.onkeydown = checkKey;
 
-const fps = 10;
+const fps: number = 10;
 
 const gameLoop = (_delta: number) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    snake.update(level);
+    if (game.isGameOver()) {
+        ctx.font = "50px Roboto";
+        ctx.fillStyle = "black";
+        ctx.fillText("Game Over", 130, 240);
+        return
+    }
+
+    level.update();
+    snake.update(level, game);
     
     level.render(ctx);
     snake.render(ctx);

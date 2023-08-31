@@ -15,7 +15,7 @@ class Snake {
         return false;
     }
 
-    update(level: Level) {
+    update(level: Level, game: Game) {
         // move 1: update tail
         if (this.body.length > 1) {
             for (let i = this.body.length - 1; i > 0; i--) {
@@ -38,20 +38,20 @@ class Snake {
         // collide?
         if (level.isCollideWall(this.body[0][0], this.body[0][1]) 
             || this.isCollideSnake(this.body[0][0], this.body[0][1])) {
-            // game over
-            this.body = [[5, 5]];
-            inputs = {
-                up: false,
-                down: false,
-                left: false,
-                right: false
-            }
+            game.endGame();
         }
 
         // eat?
         if (level.isCollideFood(this.body[0][0], this.body[0][1])) {
             level.removeFood(this.body[0][0], this.body[0][1]);
             this.body.push([this.body[0][0], this.body[0][1]]);
+            game.increaseHighscore(10);
+        } else if (level.isCollideSuperFood(this.body[0][0], this.body[0][1])) {
+            level.removeFood(this.body[0][0], this.body[0][1]);
+            this.body.push([this.body[0][0], this.body[0][1]]);
+            this.body.push([this.body[0][0], this.body[0][1]]);
+            this.body.push([this.body[0][0], this.body[0][1]]);
+            game.increaseHighscore(30);
         }
     }
 
