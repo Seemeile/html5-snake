@@ -10,11 +10,19 @@ class Game {
         this.gameover = true;
     }
 
-    increaseHighscore(score: number) {
-        this.highscore += score;
+    setHighscore(score: number) {
         const highscoreNode = document.getElementById("highscore")
         if (highscoreNode) {
-            highscoreNode.innerText = this.highscore.toString();
+            highscoreNode.innerText = score.toString();
         }
+    }
+
+    increaseHighscore(score: number) {
+        this.setHighscore(this.highscore += score);
+    }
+
+    reset() {
+        this.setHighscore(0);
+        this.gameover = false;
     }
 }

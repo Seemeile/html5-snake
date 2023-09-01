@@ -15,6 +15,10 @@ class Snake {
         return false;
     }
 
+    reset() {
+        this.body = [[5, 5]];
+    }
+
     update(level: Level, game: Game) {
         // move 1: update tail
         if (this.body.length > 1) {
@@ -56,7 +60,7 @@ class Snake {
     }
 
     render(ctx: CanvasRenderingContext2D) {
-        ctx.fillStyle = 'grey';
+        ctx.fillStyle = 'silver';
         for (let i = 0; i < this.body.length; i++) {
             ctx.fillRect(this.body[i][0] * 10, this.body[i][1] * 10, 10, 10);
         }

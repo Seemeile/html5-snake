@@ -19,7 +19,8 @@ let inputs: {
 
 const checkKey = (e) => {
     e = e || window.event;
-    
+    e.preventDefault();
+
     if (e.keyCode == '38' && !inputs.down) {
         inputs = { up: true, down: false, left: false, right: false };
     }
@@ -32,27 +33,36 @@ const checkKey = (e) => {
     else if (e.keyCode == '39' && !inputs.left) {
         inputs = { up: false, down: false, left: false, right: true };
     }
+    else if (e.keyCode == '82') {
+        inputs = { up: false, down: false, left: false, right: false };
+        level.reset();
+        snake.reset();
+        game.reset();
+    }
 }
 
 document.onkeydown = checkKey;
 
-const fps: number = 10;
+const fps: number = 12;
 
 const gameLoop = (_delta: number) => {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height); 
 
     if (game.isGameOver()) {
         ctx.font = "50px Roboto";
         ctx.fillStyle = "black";
         ctx.fillText("Game Over", 130, 240);
-        return
+        ctx.font = "24px Roboto";
+        ctx.fillText("Press R to restart", 170, 280);        
+    } else {
+        // update
+        level.update();
+        snake.update(level, game);
+        
+        // render
+        level.render(ctx);
+        snake.render(ctx);
     }
-
-    level.update();
-    snake.update(level, game);
-    
-    level.render(ctx);
-    snake.render(ctx);
 
     setTimeout(() => {
         requestAnimationFrame(gameLoop);
